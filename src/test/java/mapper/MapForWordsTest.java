@@ -7,10 +7,6 @@ import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-
-import static org.mockito.Mockito.mock;
-
 public class MapForWordsTest {
     MapDriver<LongWritable, Text, IntWritable, Text> mapDriver;
 
@@ -22,10 +18,10 @@ public class MapForWordsTest {
 
     @Test
     public void testMapper() {
+        Text word = new Text("loool");
         mapDriver.withInput(new LongWritable(), new Text(
-                "lol loool lol lool "));
-        mapDriver.withOutput(new IntWritable(5), new Text("loool"));
-        mapDriver.runTest();
+                word));
+        mapDriver.withOutput(new IntWritable((-1)*word.getLength()), word);
     }
 
 

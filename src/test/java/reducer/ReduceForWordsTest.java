@@ -20,13 +20,11 @@ public class ReduceForWordsTest {
 
     @Test
     public void reduceTest() throws Exception {
-        List<Text> values = new ArrayList<Text>();
+        List<Text> values = new ArrayList<>();
         values.add(new Text("tedt"));
-        values.add(new Text("add"));
-        values.add(new Text("wowowowowowwowoo"));
 
-        reduceDriver.withInput(new IntWritable(), values);
-        reduceDriver.withOutput(new Text("6"), new IntWritable(2));
+        reduceDriver.withInput(new IntWritable(4), values);
+        reduceDriver.withOutput(new IntWritable(4), new Text("tedt"));
         reduceDriver.runTest();
     }
 }
