@@ -24,10 +24,11 @@ public class MapReduceDriver {
             Job j = new Job(c, "LongestWord");
             j.setJarByClass(MapReduceDriver.class);
             j.setMapperClass(MapForWords.class);
+            j.setCombinerClass(CombinerForWords.class);
             j.setReducerClass(ReduceForWords.class);
             j.setOutputKeyClass(IntWritable.class);
             j.setOutputValueClass(Text.class);
-            j.setCombinerClass(CombinerForWords.class);
+
             j.setNumReduceTasks(1);
             FileInputFormat.addInputPath(j, input);
             FileOutputFormat.setOutputPath(j, output);

@@ -23,9 +23,10 @@ public class CombinerForWords extends Reducer<IntWritable, Text, IntWritable, Te
     protected void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         Iterator<Text> itr = values.iterator();
         Text txt = new Text(itr.next());
-        if(txt.getLength()> max.get()){
+        if(txt.getLength()>max.get()){
             listOfWords.clear();
             listOfWords.add(txt);
+            max.set(txt.getLength());
             while(itr.hasNext()){
                 listOfWords.add(itr.next());
             }
