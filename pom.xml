@@ -32,23 +32,18 @@
             <artifactId>hadoop-mapreduce-client-core</artifactId>
             <version>2.8.1</version>
         </dependency>
-
+<!--
         <dependency>
-            <groupId>org.apache.mrunit</groupId>
-            <artifactId>mrunit</artifactId>
-            <version>0.9.0-incubating</version>
+            <groupid>org.apache.mrunit</groupid>
+            <artifactid>mrunit</artifactid>
+            <version>1.1.0</version>
             <classifier>hadoop1</classifier>
-        </dependency>
+            <scope>test</scope>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.mrunit</groupId>
             <artifactId>mrunit</artifactId>
-            <version>0.9.0-incubating</version>
-            <classifier>hadoop1</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.mrunit</groupId>
-            <artifactId>mrunit</artifactId>
-            <version>0.9.0-incubating</version>
+            <version>1.1.0</version>
             <classifier>hadoop2</classifier>
         </dependency>
     </dependencies>
@@ -58,8 +53,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
