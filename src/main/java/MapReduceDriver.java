@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import reducer.ReduceForWords;
 
 
-public class Main {
+public class MapReduceDriver {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         {
@@ -22,7 +22,7 @@ public class Main {
             Path input = new Path(args[0]);
             Path output = new Path(args[1]);
             Job j = new Job(c, "LongestWord");
-            j.setJarByClass(Main.class);
+            j.setJarByClass(MapReduceDriver.class);
             j.setMapperClass(MapForWords.class);
             j.setReducerClass(ReduceForWords.class);
             j.setOutputKeyClass(IntWritable.class);
