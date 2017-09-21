@@ -1,4 +1,5 @@
 
+import combiner.CombinerForWords;
 import mapper.MapForWords;
 import org.apache.hadoop.util.GenericOptionsParser;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class Main {
             j.setReducerClass(ReduceForWords.class);
             j.setOutputKeyClass(IntWritable.class);
             j.setOutputValueClass(Text.class);
+            j.setCombinerClass(CombinerForWords.class);
             j.setNumReduceTasks(1);
             FileInputFormat.addInputPath(j, input);
             FileOutputFormat.setOutputPath(j, output);

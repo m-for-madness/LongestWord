@@ -9,33 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ReduceForWords extends Reducer<IntWritable, Text, IntWritable, Text> {
-    private List<Text> listOfWords;
-    private IntWritable max_length;
+    private Boolean check;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
-        listOfWords = new ArrayList<>();
-        max_length  = new IntWritable(0);
+        check = false;
     }
 
     public void reduce(IntWritable key, Iterable<Text> values, Reducer<IntWritable, Text, IntWritable, Text>.Context con) throws IOException, InterruptedException {
         Iterator<Text> itr = values.iterator();
-        if(key.get()>max_length.get()){
-            listOfWords.clear();
-            max_length.set(key.get());
-            while (itr.hasNext()) {
-                listOfWords.add(itr.next());
-            }
+        while(itr.hasNext()&& (check==false)){
+            con.write(key, itr.next());
+        check=true;
         }
     }
 
-    @Override
-    protected void cleanup(Context con) throws IOException, InterruptedException {
-        IntWritable tmp = new IntWritable(0);
-        for (Text t : listOfWords) {
-            tmp.set(t.getLength());
-            con.write(tmp, t);
-        }
 
-    }
 }

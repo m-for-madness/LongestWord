@@ -13,7 +13,7 @@ public class MapForWords extends Mapper<LongWritable, Text, IntWritable, Text> {
         String line = value.toString();
         String[] words = line.split("[ ,.!?()*']");
         for (String word : words) {
-            IntWritable outputKey = new IntWritable(word.length());
+            IntWritable outputKey = new IntWritable((-1)*word.length());
             Text outputValue = new Text(word.toUpperCase().trim());
             con.write(outputKey, outputValue);
         }
