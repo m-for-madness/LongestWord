@@ -1,6 +1,8 @@
 
 import combiner.CombinerForWords;
 import mapper.MapForWords;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.util.GenericOptionsParser;
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -19,7 +21,7 @@ public class MapReduceDriver {
         {
             Configuration c = new Configuration();
             String[] files = new GenericOptionsParser(c, args).getRemainingArgs();
-            Path input = new Path(args[0]);
+            //Path input = new Path(args[0]);
             Path output = new Path(args[1]);
             Job j = new Job(c, "LongestWord");
             j.setJarByClass(MapReduceDriver.class);
@@ -30,7 +32,15 @@ public class MapReduceDriver {
             j.setOutputValueClass(Text.class);
 
             j.setNumReduceTasks(1);
-            FileInputFormat.addInputPath(j, input);
+            FileSystem fs= FileSystem.get(c);
+            FileInputFormat.setInputDirRecursive(j,true);
+
+            FileStatus[] status_list = fs.listStatus(new Path(args[0]));
+            if(status_list != null){
+                for(FileStatus status : status_list){
+                    FileInputFormat.addInputPath(j, status.getPath());
+                }
+            }
             FileOutputFormat.setOutputPath(j, output);
             System.exit(j.waitForCompletion(true) ? 0 : 1);
         }

@@ -7,6 +7,8 @@ import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class MapForWordsTest {
     MapDriver<LongWritable, Text, IntWritable, Text> mapDriver;
 
@@ -17,11 +19,12 @@ public class MapForWordsTest {
     }
 
     @Test
-    public void testMapper() {
-        Text word = new Text("loool");
+    public void testMapper() throws IOException {
+        Text word = new Text("LOOOL");
         mapDriver.withInput(new LongWritable(), new Text(
                 word));
         mapDriver.withOutput(new IntWritable((-1)*word.getLength()), word);
+        mapDriver.runTest();
     }
 
 

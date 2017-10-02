@@ -30,7 +30,8 @@ public class MapReduceDriverTest {
         list.add(new Text("wooow"));
         list.add(new Text("loooool"));
         list.add(new Text("kek"));
-        mapReduceDriver.withOutput(new IntWritable(7), new Text("loooool"));
+        mapReduceDriver.withOutput(new IntWritable(7), new Text("LOOOOOL"));
+        mapReduceDriver.runTest();
 
     }
 }

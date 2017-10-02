@@ -16,24 +16,23 @@ public class CombinerForWordsTest {
 
     @Before
     public void setUp() throws Exception {
-        ReduceForWords reduceForWords = new ReduceForWords();
+        CombinerForWords reduceForWords = new CombinerForWords();
         reduceDriver = ReduceDriver.newReduceDriver(reduceForWords);
     }
 
     @Test
     public void reduceTest() throws Exception {
         List<Text> values = new ArrayList<>();
-        values.add(new Text("tedt"));
-        values.add(new Text("ted1"));
-        values.add(new Text("ted2"));
-        values.add(new Text("ted3"));
+        values.add(new Text("tedt23"));
+        values.add(new Text("tedt56"));
 
-      //  reduceDriver.withInput(new IntWritable(4), values);
-      //  reduceDriver.withOutput(new IntWritable(4), new Text("tedt"));
-       // reduceDriver.runTest();
-        new ReduceDriver<IntWritable, Text, IntWritable, Text>().withInput(new IntWritable(4), values).withOutput( new IntWritable(4), values.get(0))
-                                                                                                            .withOutput( new IntWritable(4), values.get(1))
-                                                                                                            .withOutput(new IntWritable(4), values.get(2))
-                                                                                                            .withOutput(new IntWritable(4), values.get(3));
+        //reduceDriver.withInput(new IntWritable(6), values);
+        //reduceDriver.withOutput( new IntWritable(values.get(0).getLength()*-1), values.get(0));
+        reduceDriver.withInput(new IntWritable(-6), values).withOutput( new IntWritable(values.get(0).getLength()*-1), values.get(0))
+                .withOutput( new IntWritable(values.get(1).getLength()*-1), values.get(1));
+        reduceDriver.runTest();
+
+
+
     }
 }

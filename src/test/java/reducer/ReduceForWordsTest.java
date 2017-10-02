@@ -22,9 +22,9 @@ public class ReduceForWordsTest {
     public void reduceTest() throws Exception {
         List<Text> values = new ArrayList<>();
         values.add(new Text("tedt"));
-
-        reduceDriver.withInput(new IntWritable(4), values);
-        reduceDriver.withOutput(new IntWritable(4), new Text("tedt"));
+        values.add(new Text("te12"));
+        reduceDriver.withInput(new IntWritable(-4), values);
+        reduceDriver.withOutput(new IntWritable(4), new Text("tedt , te12"));
         reduceDriver.runTest();
     }
 }

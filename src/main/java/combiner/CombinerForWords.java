@@ -12,39 +12,33 @@ import java.util.List;
 public class CombinerForWords extends Reducer<IntWritable, Text, IntWritable, Text> {
     private IntWritable max;
     private List<Text> listOfWords;
+    private Text txt;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
         max = new IntWritable(0);
         listOfWords = new ArrayList<>();
+        txt = new Text("");
     }
 
     @Override
-    protected void reduce(IntWritable key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+    public void reduce(IntWritable key, Iterable<Text> values, Reducer<IntWritable, Text, IntWritable, Text>.Context con) throws IOException, InterruptedException {
         Iterator<Text> itr = values.iterator();
-        Text txt = new Text(itr.next());
-        if(txt.getLength()>max.get()){
-            listOfWords.clear();
-            listOfWords.add(txt);
-            max.set(txt.getLength());
-            while(itr.hasNext()){
-                listOfWords.add(itr.next());
+        Text txt;
+        while (itr.hasNext()) {
+            txt = new Text(itr.next());
+            if (txt.getLength() > max.get()) {
+                max.set(txt.getLength());
+                listOfWords.clear();
+
+            }
+            if (txt.getLength() == max.get()) {
+                listOfWords.add(txt);
             }
         }
-        else if(txt.getLength()==max.get()){
-            listOfWords.add(txt);
-            while(itr.hasNext()){
-                listOfWords.add(itr.next());
-            }
+        for(Text t : listOfWords){
+            con.write(new IntWritable(max.get()*-1),t);
         }
     }
 
-    @Override
-    protected void cleanup(Context context) throws IOException, InterruptedException {
-        IntWritable tmp = new IntWritable(0);
-        for (Text t : listOfWords) {
-            tmp.set((-1)*t.getLength());
-            context.write(tmp, t);
-        }
-    }
 }
