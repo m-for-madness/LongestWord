@@ -1,6 +1,7 @@
 # LongestWord
 
 This project finds the longest words in txt files
+
 Put list of files into hadoop
  hadoop fs -put input/ inputDir
 
