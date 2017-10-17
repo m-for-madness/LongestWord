@@ -14,7 +14,7 @@ public class MapForWords extends Mapper<LongWritable, Text, IntWritable, Text> {
         String[] words = line.split("[ ,.!?()*\":;/']");
         for (String word : words) {
             IntWritable outputKey = new IntWritable((-1)*word.length());
-            Text outputValue = new Text(word.toUpperCase().trim());
+            Text outputValue = new Text(word.trim());
             con.write(outputKey, outputValue);
         }
 

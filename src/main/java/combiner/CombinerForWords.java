@@ -27,12 +27,12 @@ public class CombinerForWords extends Reducer<IntWritable, Text, IntWritable, Te
         Text txt;
         while (itr.hasNext()) {
             txt = new Text(itr.next());
+            if (txt.getLength() == max.get()) {
+                listOfWords.add(txt);
+            }
             if (txt.getLength() > max.get()) {
                 max.set(txt.getLength());
                 listOfWords.clear();
-
-            }
-            if (txt.getLength() == max.get()) {
                 listOfWords.add(txt);
             }
         }

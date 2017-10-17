@@ -5,18 +5,16 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReduceForWords extends Reducer<IntWritable, Text, IntWritable, Text> {
     private IntWritable max_length;
-    private List<String> list;
+    private Set<String> set;
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
-        list = new ArrayList<>();
+        set = new HashSet<>();
         max_length = new IntWritable(0);
     }
 
@@ -24,10 +22,11 @@ public class ReduceForWords extends Reducer<IntWritable, Text, IntWritable, Text
         if (max_length.get() == 0) {
 
             for (Text t : values) {
-                list.add(t.toString());
+                set.add(t.toString());
                 max_length.set(t.getLength());
             }
-            String s = list.stream().collect(Collectors.joining(" , "));
+            System.out.println(set.size());
+            String s = set.stream().collect(Collectors.joining("\n"));
             con.write(max_length, new Text(s));
         }
     }
